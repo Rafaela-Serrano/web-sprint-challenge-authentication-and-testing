@@ -18,7 +18,7 @@ describe( 'server.js' , () => {
 
 describe('[POST]/register', () => {
   it('response with a new created user', async() => {
-    const response = (await request(auth_router).post('/register')).send({
+    const response = await request(auth_router).post('/register').send({
       username:'Paul',password:'12345'
     })
 
