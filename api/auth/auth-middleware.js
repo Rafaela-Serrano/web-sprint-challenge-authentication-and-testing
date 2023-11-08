@@ -1,11 +1,11 @@
-const auth_model = require ('../auth/auth-model')
+const auth_model = require ('./auth-model')
 
 function checkReqBodyUsernamePassword ( req, res, next ) {
     try{
         if(!req.body.username || !req.body.password){
             next({
                 status:422,
-                message:"username and password required"
+                message:"username or password required"
             })
         }else{
             next()
@@ -31,6 +31,7 @@ async function checkUsernameNotTaken ( req, res, next ) {
         next(err)
     }
 }
+
 
 module.exports = {
     checkReqBodyUsernamePassword,

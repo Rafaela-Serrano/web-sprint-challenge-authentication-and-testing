@@ -10,6 +10,7 @@ const {
 
 router.post( '/register' , checkReqBodyUsernamePassword, checkUsernameNotTaken, 
 (req, res, next) => {
+  
   const { username, password } = req.body
   
   const hash = bcrypt.hashSync( password, 8 );
@@ -48,12 +49,11 @@ router.post( '/register' , checkReqBodyUsernamePassword, checkUsernameNotTaken,
   */
 });
 
-router.post( '/login' , checkReqBodyUsernamePassword, checkUsernameNotTaken, (req, res, next) => {
+router.post( '/login' , checkReqBodyUsernamePassword, (req, res, next) => {
 
   let { username, password } = req.body 
 
   auth_model.findBy({username})
-
     .then( ([user]) => {
 
       if( user && bcrypt.compareSync( password, user.password ) ){
@@ -62,7 +62,7 @@ router.post( '/login' , checkReqBodyUsernamePassword, checkUsernameNotTaken, (re
 
         res.status(200).json({
           message: `welcome,${user.username}`,
-          token
+          token: token
         })
       }else{
         next({
